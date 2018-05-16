@@ -224,62 +224,62 @@ if [[ -a ./tobackup.file ]]; then
        backup_catlist
        > ./info.file
        echo '</pre>'
-        exit
-         else
-           if ( check_text_length $var10 ); then
-	   echo '<br>' 
-	   echo '<b>'"The backup dir name string is too large: $? "'</b>'
-	     elif ( check_text_length $var11 ); then
-	     echo '<br>'
-	     echo '<b>'"The save dir name string is too large: "'</b>'
-	      exit
-	       else
-	         if ( filter20 $var10 ); then
-	         echo '<br><br><b>ENTER: What dir backup? & Where to save?:</b>'
-	         echo '<pre>'
-	         echo '### EXAMPLE:'
-	         echo '/path/to/backup/'
-	         echo '--------------'
-	         echo '/path/to/save/'
-	         echo '###'
-	         echo '<pre>'
-	          exit
+       exit
+          else
+             if ( check_text_length $var10 ); then
+	     echo '<br>' 
+	     echo '<b>'"The backup dir name string is too large: $? "'</b>'
+	        elif ( check_text_length $var11 ); then
+	        echo '<br>'
+	        echo '<b>'"The save dir name string is too large: "'</b>'
+	        exit
 	           else
-	             if ! [[ -s ./tosave.file ]]; then
-	               if ( filter20 $var11 ); then
-		       echo '<br><br><b>ENTER: Where we shall to save files?:</b>'
-		        exit
-		         elif ( check_dir "$var10" ); then
-		         echo '<br><b>Directory not exist:</b>'
-		          exit
-		         catlist
-		         elif ( check_dir "$var11" ); then
-		         echo '<br><b>Directory not exist:</b>'
-		          exit
-		           else
-		           end_correction "$var11"
-		           echo "$var10" > ./tobackup.file
-		           catlist
-		           fi
- 	  		   else
- 		             if ( check_dir "$var10" ); then
-   		               echo '<br><b>Directory not exist:</b>'
+	              if ( filter20 $var10 ); then
+	              echo '<br><br><b>ENTER: What dir backup? & Where to save?:</b>'
+	              echo '<pre>'
+	              echo '### EXAMPLE:'
+	              echo '/path/to/backup/'
+	              echo '--------------'
+	              echo '/path/to/save/'
+	              echo '###'
+	              echo '<pre>'
+	              exit
+	                 else
+	                    if ! [[ -s ./tosave.file ]]; then
+	                       if ( filter20 $var11 ); then
+		               echo '<br><br><b>ENTER: Where we shall to save files?:</b>'
+		               exit
+		               elif ( check_dir "$var10" ); then
+		               echo '<br><b>Directory not exist:</b>'
+		               exit
 		               catlist
-		               echo '<br>'
-	         	       backup_push
-                               echo '<br><br>'
-			       removeall
-			        exit
-			         else
-				   if [[ -s ./tosave.file ]]; then
-				   echo $var10 >> ./tobackup.file
-				   echo '<br>'
-				   catlist
-				   echo "<font color='#008000'>"$var10":</font><b>New path added:</b>"
-  				   echo '<br><br>'
-				     else
-				       echo END
-				        exit 1
+		                  elif ( check_dir "$var11" ); then
+		                  echo '<br><b>Directory not exist:</b>'
+		                  exit
+		                  else
+		                  end_correction "$var11"
+		                  echo "$var10" > ./tobackup.file
+		                  catlist
+		                  fi
+ 	  		             else
+ 		             	        if ( check_dir "$var10" ); then
+   		                        echo '<br><b>Directory not exist:</b>'
+		                        catlist
+		                        echo '<br>'
+	         	                backup_push
+                                        echo '<br><br>'
+			       		removeall
+			        	exit
+			                   else
+				   	      if [[ -s ./tosave.file ]]; then
+				   	      echo $var10 >> ./tobackup.file
+				   	      echo '<br>'
+				              catlist
+				              echo "<font color='#008000'>"$var10":</font><b>New path added:</b>"
+  				              echo '<br><br>'
+				                 else
+				       		 echo END
+				        	 exit 1
 fi
 fi
 fi
