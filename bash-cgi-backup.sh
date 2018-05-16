@@ -95,11 +95,9 @@ fi
 function end_correction(){
 case "$1" in
 */)
-        echo "have '/'"
 	echo "$1" > ./tosave.file
     ;;
 *)
-        echo "dont have"
         echo "$1/" > ./tosave.file
     ;;
 esac
@@ -199,93 +197,89 @@ filter10 $var01
 filter11 $var02
 
 if [[ -a ./tobackup.file ]]; then
-	if [[ "$var03" == "remove" ]]; 	then
-	echo '<br>'
-	echo 'All path has been removed!'
-	> ./tobackup.file
-	> ./tosave.file
-	 exit
-#---------------------------------------------------------BACKUP
-		elif
-		[[ "$var03" == "bpush" ]]; then
-		echo '<br>'
-		echo 'Doing...'
-		#rsync -avzh `cat ./tobackup.file` `cat ./tosave.file` /dev/null 2>&1
-		backup_make_history
-		backup_start
-			if [[ "$?" -eq 0 ]]; then
-			echo 'Backup done.'; else
-			echo 'Backup failed =('; 
-			fi
-			> ./tobackup.file
-			> ./tosave.file
-			echo '<br>'
-			echo '<pre>'
-			backup_show_history
-			> ./tohistory.file
-			echo '<br><br>'
-			backup_catlist
-			> ./info.file
-			echo '</pre>'
-			exit
-#-----------------------------------------------------/BACKUP
-			else
-				if ( check_text_length $var10 ); then
-				echo '<br>' 
-				echo '<b>'"The backup dir name string is too large: $? "'</b>'
-					elif ( check_text_length $var11 ); then
-					echo '<br>'
-					echo '<b>'"The save dir name string is too large: "'</b>'
-					exit
-					else
-						if ( filter20 $var10 ); then
-						echo '<br><br><b>ENTER: What dir backup? & Where to save?:</b>'
-						echo '<pre>'
-						echo '### EXAMPLE:'
-						echo '/path/to/backup/'
-						echo '--------------'
-						echo '/path/to/save/'
-						echo '###'
-						echo '<pre>'
-						exit
-						else
-							if ! [[ -s ./tosave.file ]]; then
-							if ( filter20 $var11 ); then
-							echo '<br><br><b>ENTER: Where we shall to save files?:</b>'
-							exit
-								elif ( check_dir "$var10" ); then
-								echo '<br><b>Directory not exist:</b>'
-								exit
-								catlist
-									elif ( check_dir "$var11" ); then
-						        	        echo '<br><b>Directory not exist:</b>'
-						                	exit
-									else
-									end_correction "$var11"
-									echo "$var10" > ./tobackup.file
-									catlist
-									fi
- 	else
-#----------------------------------------------------------------------------------------------DIR CHECK
-	if ( check_dir "$var10" ); then
-	echo '<br><b>Directory not exist:</b>'
-	catlist
-	echo '<br>'
-	backup_push
-	echo '<br><br>'
-	removeall
-	exit
-#---------------------------------------------------------------------------------------------/DIR CHECK
-		else
-		if [[ -s ./tosave.file ]]; then
-		echo $var10 >> ./tobackup.file
-		echo '<br>'
-		catlist
-		echo "<font color='#008000'>"$var10":</font><b>New path added:</b>"
-		echo '<br><br>'
-			else
-			echo END
-			exit 1
+  if [[ "$var03" == "remove" ]]; 	then
+  echo '<br>'
+  echo 'All path has been removed!'
+  > ./tobackup.file
+  > ./tosave.file
+   exit
+    elif
+     [[ "$var03" == "bpush" ]]; then
+     echo '<br>'
+     echo 'Doing...'
+     #rsync -avzh `cat ./tobackup.file` `cat ./tosave.file` /dev/null 2>&1
+     backup_make_history
+     backup_start
+       if [[ "$?" -eq 0 ]]; then
+       echo 'Backup done.'; else
+       echo 'Backup failed =('; 
+       fi
+       > ./tobackup.file
+       > ./tosave.file
+       echo '<br>'
+       echo '<pre>'
+       backup_show_history
+       > ./tohistory.file
+       echo '<br><br>'
+       backup_catlist
+       > ./info.file
+       echo '</pre>'
+        exit
+         else
+           if ( check_text_length $var10 ); then
+	   echo '<br>' 
+	   echo '<b>'"The backup dir name string is too large: $? "'</b>'
+	     elif ( check_text_length $var11 ); then
+	     echo '<br>'
+	     echo '<b>'"The save dir name string is too large: "'</b>'
+	      exit
+	       else
+	         if ( filter20 $var10 ); then
+	         echo '<br><br><b>ENTER: What dir backup? & Where to save?:</b>'
+	         echo '<pre>'
+	         echo '### EXAMPLE:'
+	         echo '/path/to/backup/'
+	         echo '--------------'
+	         echo '/path/to/save/'
+	         echo '###'
+	         echo '<pre>'
+	          exit
+	           else
+	             if ! [[ -s ./tosave.file ]]; then
+	               if ( filter20 $var11 ); then
+		       echo '<br><br><b>ENTER: Where we shall to save files?:</b>'
+		        exit
+		         elif ( check_dir "$var10" ); then
+		         echo '<br><b>Directory not exist:</b>'
+		          exit
+		         catlist
+		         elif ( check_dir "$var11" ); then
+		         echo '<br><b>Directory not exist:</b>'
+		          exit
+		           else
+		           end_correction "$var11"
+		           echo "$var10" > ./tobackup.file
+		           catlist
+		           fi
+ 	  		   else
+ 		             if ( check_dir "$var10" ); then
+   		               echo '<br><b>Directory not exist:</b>'
+		               catlist
+		               echo '<br>'
+	         	       backup_push
+                               echo '<br><br>'
+			       removeall
+			        exit
+			         else
+				   if [[ -s ./tosave.file ]]; then
+				   echo $var10 >> ./tobackup.file
+				   echo '<br>'
+				   catlist
+				   echo "<font color='#008000'>"$var10":</font><b>New path added:</b>"
+  				   echo '<br><br>'
+				     else
+				       echo END
+				        exit 1
 fi
 fi
 fi
