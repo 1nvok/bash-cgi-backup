@@ -229,10 +229,16 @@ if [[ -a ./tobackup.file ]]; then
              if ( check_text_length $var10 ); then
 	     echo '<br>' 
 	     echo '<b>'"The backup dir name string is too large: $? "'</b>'
+	     catlist
+             echo '<br>'
+             backup_push
+             echo '<br><br>'
+             removeall
+	     exit
 	        elif ( check_text_length $var11 ); then
 	        echo '<br>'
 	        echo '<b>'"The save dir name string is too large: "'</b>'
-	        exit
+		exit
 	           else
 	              if ( filter20 $var10 ); then
 	              echo '<br><br><b>ENTER: What dir backup? & Where to save?:</b>'
